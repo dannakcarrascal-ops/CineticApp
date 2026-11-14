@@ -670,27 +670,27 @@ with tab_prediccion:
 
         # Diagnóstico por rango climático (Estándares ICH / OMS)
         if temp_pred_c < 0.0: 
-            zona_clima = "Condición de Congelación (< 0 °C)" 
+            zona_clima = "Congelación (< 0 °C)" 
             recomendacion = "nivel de disminución sustancial de la velocidad de degradación. Se debe verificar que la formulación soporte ciclos de congelación-descongelación sin precipitación del activo ni separación de fases." 
             badge_color = "#38bdf8"
         elif 2.0 <= temp_pred_c <= 8.0: 
-            zona_clima = "Condición de Refrigeración (2 °C - 8 °C)" 
+            zona_clima = "Refrigeración (2 °C - 8 °C)" 
             recomendacion = "estado de conservación Óptima. La disminución de energía térmica frena significativamente la constante k, desacelerando la descomposición del activo."
             badge_color = "#00D2FF"
         elif 15.0 <= temp_pred_c <= 25.0: 
-            zona_clima = "Condición Ambiente Estándar (Zona ICH I/II - 15 °C a 25 °C)" 
-            recomendacion = "comportamiento estable dentro de los parámetros comerciales previstos para almacenamiento en estantería convencionales."
+            zona_clima = "Ambiente Estándar (Zona ICH I/II - 15 °C a 25 °C)" 
+            recomendacion = "comportamiento estable dentro de los parámetros comerciales previstos para depósito en estantería convencionales."
             badge_color = "#10b981"
         elif 30.0 <= temp_pred_c <= 39.0: 
-            zona_clima = "Condición Tropical / Cálida (Zona ICH IV - 30 °C)" 
+            zona_clima = "Tropical / Cálida (Zona ICH IV - 30 °C)" 
             recomendacion = "nivel de aceleración moderada en la cinética de degradación. Se sugiere empaque primario con alta barrera a la humedad e indicación 'Mantener por debajo de 30 °C'."
             badge_color = "#f59e0b"
         elif 40.0 <= temp_pred_c <= 59.0: 
-            zona_clima = "Condición de Estrés Térmico Acelerado (40 °C)" 
+            zona_clima = "Estrés Térmico Acelerado (40 °C)" 
             recomendacion = "nivel de degradación acelerada crítica (Condición ICH Q1A). Debe monitorearse la aparición de productos de degradación secundarios y pérdida de potencia."
             badge_color = "#f97316"
         else: 
-            zona_clima = "Condición de Degradación Extrema (≥ 60 °C)" 
+            zona_clima = "Degradación Extrema (≥ 60 °C)" 
             recomendacion = "riesgo alto de desnaturalización, termólisis o descomposición inmediata. Evitar cualquier exposición a esta temperatura."
             badge_color = "#ef4444"
         
@@ -701,14 +701,14 @@ with tab_prediccion:
         ratio_k = k_pred / k_25
 
         if ratio_k > 1.05: 
-            efecto_k = f"La velocidad de degradación se incrementa {ratio_k:.2f} veces con respecto a los 25 °C." 
-        elif ratio_k > 0.95: 
-            efecto_k = f"La velocidad de degradación se reduce {(1.0/ratio_k):.2f} vez/veces más en comparación con 25 °C." 
+            efecto_k = f"La velocidad de degradación se incrementa {ratio_k:.2f} veces con respecto a los 25 °C" 
+        elif ratio_k < 0.95: 
+            efecto_k = f"La velocidad de degradación se reduce a {(1.0/ratio_k):.2f} vez/veces más en comparación con 25 °C" 
         else: 
-            efecto_k = "La velocidad de reacción es equivalente a la condición estándar de 25 °C."        
+            efecto_k = "La velocidad de reacción es equivalente a la condición estándar de 25 °C"        
 
         diagnostico_text = f""" 
-        El proceso de degradación del principio activo sigue de manera rigurosa un modelo de **{mejor_orden}** (ajuste de $R^2 = {mejor_r2:.4f}$) con una energía de activación de **{Ea_kJ:.2f} kJ/mol**, lo que evidencia una sensibilidad térmica  **{Sensibilidad}**. A la temperatura evaluada de **{temp_pred_c:.1f} °C**, se determina una constante cinética de **{k_pred:.4e} {unidades_k}**, indicando que {efecto_k}. En consecuencia, se proyecta una vida útil comercial de **{t90_pred:.2f} minutos**, concluyendo que a esta condición de almacenamiento ({zona_clima}) se presenta un {recomendacion}
+        El proceso de degradación del principio activo sigue de manera rigurosa un modelo de **{mejor_orden}** (ajuste de $R^2 = {mejor_r2:.4f}$) con una energía de activación de **{Ea_kJ:.2f} kJ/mol**, lo que evidencia una sensibilidad térmica  **{Sensibilidad}**. A la temperatura evaluada de **{temp_pred_c:.1f} °C**, se determina una constante cinética de **{k_pred:.4e} {unidades_k}**, indicando que {efecto_k}. En consecuencia, se proyecta una vida útil comercial de **{t90_pred:.2f} minutos**, concluyendo que a tales condiciones de almacenamiento ({zona_clima}) se presenta un {recomendacion}
 """
         st.success(diagnostico_text) 
 

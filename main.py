@@ -701,11 +701,11 @@ with tab_prediccion:
         ratio_k = k_pred / k_25
 
         if ratio_k > 1.05: 
-            efecto_k = f"La velocidad de degradación se incrementa {ratio_k:.2f} veces con respecto a los 25 °C" 
+            efecto_k = f"la velocidad de degradación se incrementa {ratio_k:.2f} veces con respecto a los 25 °C" 
         elif ratio_k < 0.95: 
-            efecto_k = f"La velocidad de degradación se reduce a {(1.0/ratio_k):.2f} vez/veces más en comparación con 25 °C" 
+            efecto_k = f"la velocidad de degradación se reduce a {(1.0/ratio_k):.2f} vez/veces más en comparación con 25 °C" 
         else: 
-            efecto_k = "La velocidad de reacción es equivalente a la condición estándar de 25 °C"        
+            efecto_k = "la velocidad de reacción es equivalente a la condición estándar de temperatura"        
 
         diagnostico_text = f""" 
         El proceso de degradación del principio activo sigue de manera rigurosa un modelo de **{mejor_orden}** (ajuste de $R^2 = {mejor_r2:.4f}$) con una energía de activación de **{Ea_kJ:.2f} kJ/mol**, lo que evidencia una sensibilidad térmica  **{Sensibilidad}**. A la temperatura evaluada de **{temp_pred_c:.1f} °C**, se determina una constante cinética de **{k_pred:.4e} {unidades_k}**, indicando que {efecto_k}. En consecuencia, se proyecta una vida útil comercial de **{t90_pred:.2f} minutos**, concluyendo que a tales condiciones de almacenamiento ({zona_clima}) se presenta un {recomendacion}

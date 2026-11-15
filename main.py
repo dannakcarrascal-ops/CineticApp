@@ -369,7 +369,7 @@ with tab_orden:
             t₉₀ — Vida Útil Comercial (10% Degradación) 
         </div> 
         <div style="font-size: 2.6rem; color: #ffffff; font-weight: 800; margin: 6px 0; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">
-            {t90:.2f} <span style="font-size: 1.2rem; font-weight: 500; color: #a7f3d0;">min</span>
+            {t90:.2f} <span style="font-size: 1.2rem; font-weight: 500; color: #a7f3d0;">{unidad_tiempo}</span>
             </div>
             <div style="font-size: 0.85rem; color: #6ee7b7; font-weight: 500;"> 
                 Tiempo estimado para conservar el 90% de la potencia activa del principio farmacéutico. 
@@ -384,7 +384,7 @@ with tab_orden:
             st.markdown(f"""
             <div style="background: #1e293b; border-top: 4px solid #3b82f6; border-radius: 12px; padding: 14px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
                 <div style="font-size: 0.8rem; color: #94a3b8; font-weight: 700; text-transform: uppercase;">t₅₀ — Vida Media</div>
-                <div style="font-size: 1.5rem; color: #60a5fa; font-weight: 800; margin: 4px 0;">{t50:.2f} min</div>
+                <div style="font-size: 1.5rem; color: #60a5fa; font-weight: 800; margin: 4px 0;">{t50:.2f} {unidad_tiempo}</div>
                 <div style="font-size: 0.75rem; color: #64748b;">50% de principio activo remanente</div>
             </div>
             """, unsafe_allow_html=True)
@@ -393,7 +393,7 @@ with tab_orden:
             st.markdown(f"""
             <div style="background: #1e293b; border-top: 4px solid #a855f7; border-radius: 12px; padding: 14px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
                 <div style="font-size: 0.8rem; color: #94a3b8; font-weight: 700; text-transform: uppercase;">t₉₅ — Estabilidad Alta</div>
-                <div style="font-size: 1.5rem; color: #c084fc; font-weight: 800; margin: 4px 0;">{t95:.2f} min</div>
+                <div style="font-size: 1.5rem; color: #c084fc; font-weight: 800; margin: 4px 0;">{t95:.2f} {unidad_tiempo}</div>
                 <div style="font-size: 0.75rem; color: #64748b;">5% de degradación tolerada</div>
             </div>
             """, unsafe_allow_html=True)
@@ -402,7 +402,7 @@ with tab_orden:
             st.markdown(f"""
             <div style="background: #1e293b; border-top: 4px solid #f97316; border-radius: 12px; padding: 14px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
                 <div style="font-size: 0.8rem; color: #94a3b8; font-weight: 700; text-transform: uppercase;">t₉₈ — Límite Estricto</div>
-                <div style="font-size: 1.5rem; color: #fb923c; font-weight: 800; margin: 4px 0;">{t98:.2f} min</div>
+                <div style="font-size: 1.5rem; color: #fb923c; font-weight: 800; margin: 4px 0;">{t98:.2f} {unidad_tiempo}</div>
                 <div style="font-size: 0.75rem; color: #64748b;">2% de degradación tolerada</div>
             </div>
             """, unsafe_allow_html=True)
@@ -616,7 +616,7 @@ with tab_prediccion:
                 Vida Útil Estimada a {temp_pred_c:.1f} °C (10% Degradación)
             </div> 
             <div style="font-size: 2.6rem; color: #ffffff; font-weight: 800; margin: 6px 0; text-shadow: 0 2px 10px rgba (0,0,0,0.3);"> 
-                {t90_pred:.2f} <span style="font-size: 1.2rem; font-weight: 500; color: #c7d2fe;">min</span> 
+                {t90_pred:.2f} <span style="font-size: 1.2rem; font-weight: 500; color: #c7d2fe;">{unidad_tiempo}</span> 
             </div> 
             <div style="font-size: 0.85rem; color: #a5b4fc; font-weigth: 500;"> 
                 Tiempo proyectado antes de perder el 10% de la potencia activa según el modelo de Arrhenius.    
@@ -631,7 +631,7 @@ with tab_prediccion:
             st.markdown(f"""
             <div style="background: #1e293b; border-top: 4px solid #3b82f6; border-radius: 12px; padding: 14px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
                 <div style="font-size: 0.8rem; color: #94a3b8; font-weight: 700; text-transform: uppercase;">t₅₀ Predicho - Vida Media</div>
-                <div style="font-size: 1.5rem; color: #68a5fa; font-weight: 800; margin: 4px 0;">{t50_pred:.2f} min</div>
+                <div style="font-size: 1.5rem; color: #68a5fa; font-weight: 800; margin: 4px 0;">{t50_pred:.2f} {unidad_tiempo}</div>
                 <div style="font-size: 0.75rem; color: #64748b;">50% de degradación estimada</div>
             </div>
             """, unsafe_allow_html=True)
@@ -640,7 +640,7 @@ with tab_prediccion:
             st.markdown(f"""
             <div style="background: #1e293b; border-top: 4px solid #4ade80; border-radius: 12px; padding: 14px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
                 <div style="font-size: 0.8rem; color: #94a3b8; font-weight: 700; text-transform: uppercase;">t₉₅ Predicho - Estabilidad Alta</div>
-                <div style="font-size: 1.5rem; color: #c004fc; font-weight: 800; margin: 4px 0;">{t95_pred:.2f}</div>
+                <div style="font-size: 1.5rem; color: #c004fc; font-weight: 800; margin: 4px 0;">{t95_pred:.2f} {unidad_tiempo}</div>
                 <div style="font-size: 0.75rem; color: #64748b;">5% de degradación tolerada</div>
             </div>
             """, unsafe_allow_html=True)        
@@ -649,7 +649,7 @@ with tab_prediccion:
             st.markdown(f"""
             <div style="background: #1e293b; border-top: 4px solid #4ade80; border-radius: 12px; padding: 14px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
                 <div style="font-size: 0.8rem; color: #94a3b8; font-weight: 700; text-transform: uppercase;">t₉₈ Predicho - Límite Estrcito</div>
-                <div style="font-size: 1.5rem; color: #fb923c; font-weight: 800; margin: 4px 0;">{t98_pred:.2f}</div>
+                <div style="font-size: 1.5rem; color: #fb923c; font-weight: 800; margin: 4px 0;">{t98_pred:.2f} {unidad_tiempo}</div>
                 <div style="font-size: 0.75rem; color: #64748b;">2% de degradación tolerada</div>
             </div>
             """, unsafe_allow_html=True)   

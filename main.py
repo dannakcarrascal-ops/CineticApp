@@ -285,7 +285,7 @@ with tab_cinética:
         with g_tab2:
             fig2 = go.Figure()
             fig2.add_trace(go.Scatter(x=t, y=inv_A, mode='markers', name='Datos Esperimentales', marker=dict(size=9, color='#FFB300')))    
-            fig2.add_trace(go.Scatter(x=t, y=res_2.slope*t + res_2.intercept, mode='lines', name=f'Ajuste (R²={r2_0:.4f})', line=dict(color='#FF4B4B', dash='dash')))
+            fig2.add_trace(go.Scatter(x=t, y=res_2.slope*t + res_2.intercept, mode='lines', name=f'Ajuste (R²={r2_2:.4f})', line=dict(color='#FF4B4B', dash='dash')))
             fig2.update_layout(title=f"Orden Dos: {ecuacion2}", xaxis_title="Tiempo (t)", yaxis_title="1 / [A]", template="plotly_dark")
             st.plotly_chart(fig2, width="stretch")
             st.info(f"""

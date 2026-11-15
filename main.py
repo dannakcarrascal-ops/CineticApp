@@ -85,7 +85,7 @@ with st.sidebar:
             Estructura requerida del Excel:
         </div>
         <div style="font-size: 0.78rem; color: #cbd5e1; line-height: 1.5; margin-top: 4px;">
-            <b>HOJA 1 (CINÉTICA): </b> Col A = Tiempo, Col B = Concentración.<br> 
+            <b>HOJA 1 (CINETICA): </b> Col A = Tiempo, Col B = Concentración.<br> 
             <b>HOJA 2 (ARRHENIUS): </b> Col A = Temp (°C), Col B = Constante <i>k</i>.
         </div>
     </div>

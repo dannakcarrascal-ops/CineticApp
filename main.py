@@ -470,7 +470,7 @@ with tab_arrhenius:
             
         # 3. Cálculo del eje X (1/T) para el gráfico de Arrhenius 
         df_arrhenius["inv_T"] = 1 / df_arrhenius["T_Kelvin"] 
-        df_arrhenius["ln_k"] = np.log(df\_arrhenius["k"])
+        df_arrhenius["ln_k"] = np.log(df_arrhenius["k"])
         
         st.divider() 
         st.subheader("🔥 Parámetros Termodinámicos de Arrhenius")   

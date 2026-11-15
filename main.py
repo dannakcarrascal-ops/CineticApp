@@ -264,7 +264,7 @@ with tab_cinética:
 * **Ecuación de la recta:** `{ecuacion0}`
 * **Pendiente (m):** {res_0.slope:.6f}
 * **Intercepto (b):** {res_0.intercept:.6f}
-* **Coenficiente de Determinación (R²):** {r2_0:.4f}
+* **Coeficiente de Determinación (R²):** {r2_0:.4f}
 """)
 
         # --- ORDEN 1 ---
@@ -278,7 +278,7 @@ with tab_cinética:
 * **Ecuación de la recta:** `{ecuacion1}`
 * **Pendiente (m):** {res_1.slope:.6f}
 * **Intercepto (b):** {res_1.intercept:.6f}
-* **Coenficiente de Determinación (R²):** {r2_1:.4f}
+* **Coeficiente de Determinación (R²):** {r2_1:.4f}
 """)       
 
         # --- ORDEN 2 ---
@@ -292,7 +292,7 @@ with tab_cinética:
 * **Ecuación de la recta:** `{ecuacion2}`
 * **Pendiente (m):** {res_2.slope:.6f}
 * **Intercepto (b):** {res_2.intercept:.6f}
-* **Coenficiente de Determinación (R²):** {r2_2:.4f}
+* **Coeficiente de Determinación (R²):** {r2_2:.4f}
 """)
     else:
         st.warning("⚠️ Ingresa al menos 3 filas completas de datos en la tabla para generar los modelos gráficos.") 
@@ -334,7 +334,7 @@ with tab_orden:
 
         if mejor_orden == "Orden Cero (0)":
             k_val = abs(res_0.slope)
-            unidades_k = "M/min"
+            unidades_k = f"{unidad_conc}/{unidad_tiempo}"
             t50 = (0.50 * A0) / k_val  
             t90 = (0.10 * A0) / k_val
             t95 = (0.05 * A0) / k_val
@@ -342,7 +342,7 @@ with tab_orden:
 
         elif mejor_orden == "Orden Uno (1)":
             k_val = abs(res_1.slope)
-            unidades_k = "min⁻¹"
+            unidades_k = f"{unidad_tiempo}⁻¹"
             t50 = np.log(2) / k_val  
             t90 = -np.log(0.90) / k_val  
             t95 = -np.log(0.95) / k_val  
@@ -350,7 +350,7 @@ with tab_orden:
 
         elif mejor_orden == "Orden Dos (2)":
             k_val = abs(res_2.slope)
-            unidades_k = "M⁻¹·min⁻¹"
+            unidades_k = f"{unidad_conc}⁻¹·{unidad_tiempo}⁻¹"
             t50 = 1.0 / (k_val * A0)  
             t90 = 1.0 / (9.0 * k_val * A0)  
             t95 = 1.0 / (19.0 * k_val * A0)  

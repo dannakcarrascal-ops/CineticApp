@@ -455,6 +455,7 @@ with tab_arrhenius:
 
         st.divider() 
         st.subheader("🔥 Parámetros Termodinámicos de Arrhenius")   
+         st.subheader("🌡️ Configuración de Temperatura") # 1\. Selector de unidad para el usuario unidad\_temp = st.radio( "Selecciona la unidad de temperatura de tus datos:", options=["°C (Celsius)", "K (Kelvin)"], horizontal=True, help="Si seleccionas °C, la aplicación los convertirá automáticamente a Kelvin (K = °C + 273.15)." ) # 2\. Conversión condicional a Kelvin según la opción elegida if "°C" in unidad\_temp: # Si ingresó en Celsius, sumamos 273.15 df\_arrhenius["T\_Kelvin"] = df\_arrhenius["Temperatura"] + 273.15 else: # Si ya ingresó en Kelvin, se dejan los datos tal cual df\_arrhenius["T\_Kelvin"] = df\_arrhenius["Temperatura"] # 3\. Cálculo del eje X (1/T) para el gráfico de Arrhenius df\_arrhenius["inv\_T"] = 1 / df\_arrhenius["T\_Kelvin"] df\_arrhenius["ln\_k"] = np.log(df\_arrhenius["k"])
 
         # 1. TARJETA HÉROE PARA ENERGÍA DE ACTIVACIÓN (Ea) 
         st.markdown(f""" 

@@ -421,12 +421,12 @@ with tab_arrhenius:
         df_arr_init = df_arr_from_file 
     elif cargar_ejemplo: 
         df_arr_init = pd.DataFrame({ 
-            "Temperatura (°C)": [25.0, 35.0, 45.0, 55.0], 
+            "Temperatura": [25.0, 35.0, 45.0, 55.0], 
             "Constante k": [0.0012, 0.0031, 0.0075, 0.0172] 
         }) 
     else: 
         df_arr_init = pd.DataFrame({ 
-            "Temperatura (°C)": [None, None, None, None], 
+            "Temperatura": [None, None, None, None], 
             "Constante k": [None, None, None, None] 
             }) 
         
@@ -452,10 +452,29 @@ with tab_arrhenius:
         
         signo_arr = "+" if res_arr.intercept >= 0 else "" 
         ecuacion_arr = f"ln(k) = {res_arr.slope:.2f}·(1/T) {signo_arr} {res_arr.intercept:.4f}"
-
+        st.subheader("🌡️ Configuración de Temperatura") 
+        # 1. Selector de unidad para el usuario 
+        unidad_temp = st.radio( 
+            "Selecciona la unidad de temperatura de tus datos:", 
+            options=["°C (Celsius)", "K (Kelvin)"], 
+            horizontal=True, 
+            help="Si seleccionas °C, la aplicación los convertirá automáticamente a Kelvin (K = °C + 273.15)." 
+        ) 
+        # 2. Conversión condicional a Kelvin según la opción elegida 
+        if "°C" in unidad_temp: 
+            # Si ingresó en Celsius, sumamos 273.15 
+            df_arrhenius["T_Kelvin"] = df_arrhenius["Temperatura"] + 273.15 
+        else: 
+            # Si ya ingresó en Kelvin, se dejan los datos tal cual 
+            df_arrhenius["T_Kelvin"] = df_arrhenius["Temperatura"] 
+            
+        # 3. Cálculo del eje X (1/T) para el gráfico de Arrhenius 
+        df_arrhenius["inv_T"] = 1 / df_arrhenius["T_Kelvin"] 
+        df_arrhenius["ln_k"] = np.log(df\_arrhenius["k"])
+        
         st.divider() 
         st.subheader("🔥 Parámetros Termodinámicos de Arrhenius")   
-         st.subheader("🌡️ Configuración de Temperatura") # 1\. Selector de unidad para el usuario unidad\_temp = st.radio( "Selecciona la unidad de temperatura de tus datos:", options=["°C (Celsius)", "K (Kelvin)"], horizontal=True, help="Si seleccionas °C, la aplicación los convertirá automáticamente a Kelvin (K = °C + 273.15)." ) # 2\. Conversión condicional a Kelvin según la opción elegida if "°C" in unidad\_temp: # Si ingresó en Celsius, sumamos 273.15 df\_arrhenius["T\_Kelvin"] = df\_arrhenius["Temperatura"] + 273.15 else: # Si ya ingresó en Kelvin, se dejan los datos tal cual df\_arrhenius["T\_Kelvin"] = df\_arrhenius["Temperatura"] # 3\. Cálculo del eje X (1/T) para el gráfico de Arrhenius df\_arrhenius["inv\_T"] = 1 / df\_arrhenius["T\_Kelvin"] df\_arrhenius["ln\_k"] = np.log(df\_arrhenius["k"])
+        
 
         # 1. TARJETA HÉROE PARA ENERGÍA DE ACTIVACIÓN (Ea) 
         st.markdown(f""" 

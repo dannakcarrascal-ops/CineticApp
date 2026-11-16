@@ -706,7 +706,7 @@ with tab_prediccion:
             efecto_k = "la velocidad de reacción es equivalente a la condición estándar de temperatura"        
 
         diagnostico_text = f""" 
-        El proceso de degradación del principio activo sigue de manera rigurosa un modelo de **{mejor_orden}** (ajuste de $R^2 = {mejor_r2:.4f}$) con una energía de activación de **{Ea_kJ:.2f} kJ/mol**, lo que evidencia una sensibilidad térmica  **{Sensibilidad}**. A la temperatura evaluada de **{temp_pred_c:.1f} °C**, se determina una constante cinética de **{k_pred:.4e} {unidades_k}**, indicando que {efecto_k}. En consecuencia, se proyecta una vida útil comercial de **{t90_pred:.2f} minutos**, concluyendo que a tales condiciones de almacenamiento ({zona_clima}) se presenta un {recomendacion}
+        El proceso de degradación del principio activo sigue de manera rigurosa un modelo de **{mejor_orden}** (ajuste de $R^2 = {mejor_r2:.4f}$) con una energía de activación de **{Ea_kJ:.2f} kJ/mol**, lo que evidencia una sensibilidad térmica  **{Sensibilidad}**. A la temperatura evaluada de **{temp_pred_c:.1f} °C**, se determina una constante cinética de **{k_pred:.4e} {unidades_k}**, indicando que {efecto_k}. En consecuencia, se proyecta una vida útil comercial de **{t90_pred:.2f} {unidad_tiempo}**, concluyendo que a tales condiciones de almacenamiento ({zona_clima}) se presenta un {recomendacion}
 """
         st.success(diagnostico_text) 
 

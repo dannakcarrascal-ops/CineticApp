@@ -590,7 +590,7 @@ with tab_prediccion:
             t50_pred = (0.50 * A0) / k_pred
             t90_pred = (0.10 * A0) / k_pred
             t95_pred = (0.05 * A0) / k_pred
-            t98_pred = (0.10 * A0) / k_pred
+            t98_pred = (0.02 * A0) / k_pred
         elif "Uno" in mejor_orden:
             t50_pred = np.log(2) / k_pred
             t90_pred = -np.log(0.90) / k_pred

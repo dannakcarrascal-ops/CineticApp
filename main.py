@@ -214,13 +214,15 @@ with tab_cinética:
     t_ingresado = t_raw[mask] 
     A = A_raw[mask] 
     
-    # Simplemente usas el tiempo tal cual lo ingresó el usuario: 
-    t_calculo = df['Tiempo'] 
-    
-    # Haces la regresión lineal directa: 
-    # m, b = np.polyfit(t_calculo, ln_C, 1) 
-    # k = -m
-
+  # 🔄 Al poner 1.0 en todas, el programa usa el tiempo tal cual lo ingresa el usuario: 
+    factores_tiempo = { 
+        "Minutos (min)": 1.0, 
+        "Segundos (s)": 1.0, 
+        "Horas (h)": 1.0, 
+        "Días (d)": 1.0, 
+        "Semanas (wk)": 1.0, 
+        "Años (yr)": 1.0 
+    }
 
     if len(t) >= 3:
         # Transformaciones

@@ -223,7 +223,9 @@ with tab_cinética:
         "Semanas (wk)": 1.0, 
         "Años (yr)": 1.0 
     }
-
+# Definición de t (usa el DataFrame donde lees los tiempos, por ejemplo df_hoja1 o df): 
+    t = df_hoja1['Tiempo'] * factores_tiempo[unidad_tiempo]
+    
     if len(t) >= 3:
         # Transformaciones
         ln_A = np.log(A)

@@ -224,7 +224,7 @@ with tab_cinética:
         "Años (yr)": 1.0 
     }
 # Definición de t (usa el DataFrame donde lees los tiempos, por ejemplo df_hoja1 o df): 
-    t = df['Tiempo'] * factores_tiempo[unidad_tiempo]
+    t = t_ingresado * factores_tiempo.get(unidad_tiempo, 1.0) 
     
     if len(t) >= 3:
         # Transformaciones

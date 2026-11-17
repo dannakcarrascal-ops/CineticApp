@@ -214,17 +214,12 @@ with tab_cinética:
     t_ingresado = t_raw[mask] 
     A = A_raw[mask] 
     
-    # 🔄 Conversión automática del tiempo a MINUTOS para mantener los cálculos cinéticos estándar 
-    factores_tiempo = { 
-        "Minutos (min)": 1.0, 
-        "Segundos (s)": 1.0 / 60.0, 
-        "Horas (h)": 60.0, 
-        "Días (d)": 1440.0, 
-        "Semanas (wk)": 10080.0, 
-        "Años (yr)": 525600.0 
-    } 
-    factor_t = factores_tiempo[unidad_tiempo] 
-    t = t_ingresado * factor_t # El tiempo 't' usado en los cálculos siempre queda en minutos
+    # Simplemente usas el tiempo tal cual lo ingresó el usuario: 
+    t_calculo = df['Tiempo'] 
+    
+    # Haces la regresión lineal directa: 
+    # m, b = np.polyfit(t_calculo, ln_C, 1) 
+    # k = -m
 
 
     if len(t) >= 3:

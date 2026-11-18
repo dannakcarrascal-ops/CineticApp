@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="artifact-type" content="narrative">
+  <meta name="design-style" content="handbook">
+  <title>Manual de Usuario — CineticApp</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* Handbook base + User 'MI MANUAL' notebook palette */
+      --background: #ffffff;
+      --desk-bg: #e2e8f0;
+      --desk-accent: #cbd5e1;
+      --surface-container-low: #f1f5f9;
+      --surface-container: #e8eef5;
+      --surface-container-high: #dbe5f0;
+
+      /* Ink */
+      --on-surface: #0f172a;
+      --on-surface-variant: #475569;
+
+      /* Rules & Notebook Lines */
+      --outline: #0f172a;
+      --outline-variant: #cbd5e1;
+      --rule-line: rgba(148, 180, 214, 0.34);
+      --margin-red: #dc2626;
+      --margin-red-soft: rgba(220, 38, 38, 0.72);
+
+      /* Primary & Accents (Deep Blue #0369a1 + Bright Navigation Blue) */
+      --primary: #0369a1;
+      --primary-hover: #075985;
+      --primary-dark: #0c4a6e;
+      --on-primary: #ffffff;
+      --primary-container: #e0f2fe;
+      --on-primary-container: #0c4a6e;
+      --btn-bright: #0284c7;
+      --btn-bright-hover: #0369a1;
+      --btn-bright-ledge: #075985;
+      --btn-secondary-bg: #f1f5f9;
+      --btn-secondary-hover: #e2e8f0;
+      --btn-secondary-ledge: #94a3b8;
+      --tertiary: #0369a1;
+      --secondary: #4c2c92;
+      --error: #b91c1c;
+      --on-error: #ffffff;
+      --positive: #0f766e;
+      --positive-bg: #ccfbf1;
+      --warning: #b45309;
+      --warning-bg: #fef3c7;
+
+      /* Spiral binder 3D metallic tones */
+      --spiral-highlight: #f8fafc;
+      --spiral-mid: #94a3b8;
+      --spiral-dark: #475569;
+      --spiral-shadow: rgba(15, 23, 42, 0.35);
+      --hole-fill: #334155;
+      --hole-rim: #94a3b8;
+      --paper-shadow: 0 20px 45px rgba(15, 23, 42, 0.14), 0 4px 12px rgba(15, 23, 42, 0.08);
+      --tab-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+      --callout-shadow: 0 2px 8px rgba(3, 105, 161, 0.06);
+
+      /* Focus */
+      --focus-yellow: #ffdd00;
+      --focus: #0369a1;
+      --focus-ring: 3px solid var(--focus-yellow);
+      --focus-bar: inset 0 0 0 2px var(--on-surface);
+
+      /* Fonts */
+      --font-headline: 'Segoe UI', 'Public Sans', Tahoma, Geneva, Verdana, sans-serif;
+      --font-body: 'Segoe UI', 'Public Sans', Tahoma, Geneva, Verdana, sans-serif;
+      --font-label: 'Public Sans', 'Segoe UI', sans-serif;
+      --font-mono: 'IBM Plex Mono', Consolas, monospace;
+
+      /* Type scale */
+      --display-size: clamp(1.65rem, 1.35rem + 1.1vw, 2.25rem);
+      --headline-size: clamp(1.2rem, 1.08rem + 0.45vw, 1.45rem);
+      --subhead-size: clamp(1.05rem, 0.98rem + 0.25vw, 1.2rem);
+      --body-size: clamp(1rem, 0.96rem + 0.15vw, 1.0625rem);
+      --label-size: 0.78rem;
+
+      /* Spacing scale */
+      --space-2xs: 0.25rem;
+      --space-xs: 0.5rem;
+      --space-sm: 0.75rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2rem;
+      --space-2xl: 2.75rem;
+
+      /* Notebook geometry & radii */
+      --line-h: 2rem;
+      --spiral-col-w: 3.35rem;
+      --margin-col-x: 4.5rem;
+      --radius-tab: 9999px;
+      --radius-card: 8px;
+      --radius-btn: 8px;
+      --radius-paper: 6px 14px 14px 6px;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 140ms;
+      --dur-short: 240ms;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+    }
+
+    body {
+      background-color: var(--desk-bg);
+      background-image: radial-gradient(circle at 20% 10%, var(--surface-container-low) 0%, var(--desk-bg) 55%, var(--desk-accent) 100%);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.62;
+      padding: var(--space-lg) var(--space-md) var(--space-2xl);
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+    }
+
+    .manual-shell {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    /* Top Rounded Tab Navigation */
+    .tabs-nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      padding: var(--space-xs);
+    }
+
+    .tab-btn {
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-md);
+      border-radius: var(--radius-tab);
+      border: 1.5px solid var(--outline-variant);
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-label);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2xs);
+      box-shadow: var(--tab-shadow);
+      transition: background-color var(--dur-micro) var(--ease-out),
+                  color var(--dur-micro) var(--ease-out),
+                  border-color var(--dur-micro) var(--ease-out),
+                  transform var(--dur-micro) var(--ease-out);
+    }
+
+    .tab-btn:hover {
+      background-color: var(--primary-container);
+      border-color: var(--primary);
+      color: var(--primary-dark);
+    }
+
+    .tab-btn.activa {
+      background-color: var(--primary);
+      border-color: var(--primary);
+      color: var(--on-primary);
+    }
+
+    .tab-btn:active {
+      transform: translateY(1px);
+    }
+
+    .tab-btn:focus-visible,
+    .btn-nav:focus-visible,
+    .faq-trigger:focus-visible,
+    .excel-switch-btn:focus-visible,
+    .check-toggle:focus-visible {
+      outline: var(--focus-ring);
+      outline-offset: 0;
+      box-shadow: var(--focus-bar);
+    }
+
+    .tab-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: var(--radius-tab);
+      background-color: var(--surface-container-high);
+      color: var(--primary-dark);
+      font-size: 0.75rem;
+      font-weight: 800;
+    }
+
+    .tab-btn.activa .tab-num {
+      background-color: var(--on-primary);
+      color: var(--primary);
+    }
+
+    /* Lab Notebook Container */
+    .libro {
+      position: relative;
+      background-color: var(--background);
+      border-radius: var(--radius-paper);
+      box-shadow: var(--paper-shadow);
+      border: 1px solid var(--outline-variant);
+      overflow: hidden;
+    }
+
+    /* Ruled Paper Surface + Vertical Red Margin */
+    .hoja {
+      display: none;
+      position: relative;
+      min-height: 680px;
+      background-color: var(--background);
+      background-image:
+        linear-gradient(
+          90deg,
+          transparent 0,
+          transparent calc(var(--margin-col-x) - 1px),
+          var(--margin-red-soft) calc(var(--margin-col-x) - 1px),
+          var(--margin-red-soft) calc(var(--margin-col-x) + 1px),
+          transparent calc(var(--margin-col-x) + 1px)
+        ),
+        repeating-linear-gradient(
+          to bottom,
+          transparent 0,
+          transparent calc(var(--line-h) - 1px),
+          var(--rule-line) calc(var(--line-h) - 1px),
+          var(--rule-line) var(--line-h)
+        );
+      background-position: 0 0, 0 1.35rem;
+      padding: var(--space-xl) var(--space-xl) var(--space-xl) calc(var(--margin-col-x) + var(--space-lg));
+      animation: pageFade var(--dur-short) var(--ease-out);
+    }
+
+    .hoja.activa {
+      display: block;
+    }
+
+    @keyframes pageFade {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 3D Silver/Grey Spiral Binder on Left Edge */
+    .espiral-columna {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: var(--spiral-col-w);
+      z-index: 4;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: flex-start;
+      padding: var(--space-md) 0;
+    }
+
+    .espiral-anillo {
+      position: relative;
+      width: 44px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+    }
+
+    .espiral-hueco {
+      position: absolute;
+      right: 3px;
+      width: 14px;
+      height: 14px;
+      border-radius: var(--radius-tab);
+      background-color: var(--hole-fill);
+      border: 1.5px solid var(--hole-rim);
+      box-shadow: inset 0 2px 3px var(--spiral-shadow);
+    }
+
+    .espiral-alambre {
+      position: relative;
+      width: 38px;
+      height: 10px;
+      border-radius: var(--radius-tab);
+      background: linear-gradient(
+        to bottom,
+        var(--spiral-dark) 0%,
+        var(--spiral-highlight) 32%,
+        var(--spiral-mid) 68%,
+        var(--spiral-dark) 100%
+      );
+      box-shadow: 0 3px 5px var(--spiral-shadow);
+      transform: rotate(-8deg);
+    }
+
+    /* Top Index Bar inside Page */
+    .index-header {
+      border-top: 5px solid var(--primary);
+      border-bottom: 1px solid var(--outline-variant);
+      padding: var(--space-xs) 0;
+      margin-bottom: var(--space-lg);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-xs);
+      font-family: var(--font-label);
+      font-weight: 700;
+      font-size: var(--label-size);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--on-surface-variant);
+    }
+
+    .pagina-badge {
+      background-color: var(--primary-container);
+      color: var(--on-primary-container);
+      padding: var(--space-2xs) var(--space-sm);
+      border-radius: var(--radius-card);
+      font-weight: 800;
+    }
+
+    /* Headings */
+    h1.titulo-cuaderno {
+      font-family: var(--font-headline);
+      font-size: var(--display-size);
+      font-weight: 800;
+      line-height: 1.15;
+      color: var(--primary);
+      margin: 0 0 var(--space-sm);
+      letter-spacing: -0.015em;
+    }
+
+    h2.titulo-pagina {
+      font-family: var(--font-headline);
+      font-size: var(--display-size);
+      font-weight: 800;
+      line-height: 1.18;
+      color: var(--primary);
+      margin: 0 0 var(--space-sm);
+      letter-spacing: -0.01em;
+    }
+
+    h3.subtitulo-seccion {
+      font-family: var(--font-headline);
+      font-size: var(--headline-size);
+      font-weight: 700;
+      color: var(--primary);
+      margin: var(--space-lg) 0 var(--space-sm);
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+
+    .step-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 28px;
+      height: 28px;
+      padding: 0 var(--space-xs);
+      background-color: var(--primary);
+      color: var(--on-primary);
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .subhead-lede {
+      font-size: var(--subhead-size);
+      color: var(--on-surface-variant);
+      margin: 0 0 var(--space-lg);
+      max-width: 65ch;
+      line-height: 1.5;
+    }
+
+    p {
+      margin: 0 0 var(--space-md);
+      max-width: 68ch;
+    }
+
+    ul, ol {
+      margin: 0 0 var(--space-md);
+      padding-left: var(--space-lg);
+      max-width: 68ch;
+    }
+
+    li {
+      margin-bottom: var(--space-xs);
+    }
+
+    code, .mono-tag {
+      font-family: var(--font-mono);
+      font-size: 0.9em;
+      background-color: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      padding: 0.1rem 0.35rem;
+      border-radius: 4px;
+      color: var(--primary-dark);
+    }
+
+    /* Callout Boxes with Thick Blue Left Border */
+    .callout-azul {
+      border-left: 5px solid var(--primary);
+      background-color: var(--surface-container-low);
+      padding: var(--space-md) var(--space-lg);
+      border-radius: 0 var(--radius-card) var(--radius-card) 0;
+      margin: var(--space-lg) 0;
+      box-shadow: var(--callout-shadow);
+    }
+
+    .callout-azul.callout-alerta {
+      border-left-color: var(--warning);
+      background-color: var(--warning-bg);
+    }
+
+    .callout-azul.callout-exito {
+      border-left-color: var(--positive);
+      background-color: var(--primary-container);
+    }
+
+    .callout-titulo {
+      font-weight: 800;
+      font-size: var(--subhead-size);
+      color: var(--primary-dark);
+      margin: 0 0 var(--space-xs);
+    }
+
+    .callout-alerta .callout-titulo {
+      color: var(--on-surface);
+    }
+
+    /* Grids & Cards inside Notebook */
+    .guia-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+      gap: var(--space-md);
+      margin: var(--space-md) 0 var(--space-lg);
+    }
+
+    .guia-card {
+      background-color: var(--background);
+      border: 1px solid var(--outline-variant);
+      border-top: 3px solid var(--primary);
+      border-radius: var(--radius-card);
+      padding: var(--space-md);
+    }
+
+    .guia-card-titulo {
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin: 0 0 var(--space-xs);
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+
+    .guia-card p {
+      margin: 0;
+      font-size: 0.94rem;
+      color: var(--on-surface-variant);
+    }
+
+    /* Excel Structure Visual Guide */
+    .excel-panel {
+      background-color: var(--background);
+      border: 1.5px solid var(--outline-variant);
+      border-radius: var(--radius-card);
+      padding: var(--space-md);
+      margin: var(--space-md) 0 var(--space-lg);
+    }
+
+    .excel-header-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-sm);
+    }
+
+    .excel-tabs {
+      display: flex;
+      gap: var(--space-xs);
+    }
+
+    .excel-switch-btn {
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-md);
+      border-radius: var(--radius-btn);
+      border: 1px solid var(--outline-variant);
+      background-color: var(--surface-container-low);
+      color: var(--on-surface);
+      font-weight: 700;
+      font-size: 0.875rem;
+      cursor: pointer;
+    }
+
+    .excel-switch-btn.activo {
+      background-color: var(--primary);
+      border-color: var(--primary);
+      color: var(--on-primary);
+    }
+
+    .tabla-guia-wrap {
+      overflow-x: auto;
+    }
+
+    table.tabla-guia {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      background-color: var(--background);
+    }
+
+    table.tabla-guia th {
+      text-align: left;
+      padding: var(--space-xs) var(--space-sm);
+      border-bottom: 2px solid var(--on-surface);
+      background-color: var(--surface-container-low);
+      font-weight: 700;
+      color: var(--on-surface);
+    }
+
+    table.tabla-guia td {
+      padding: var(--space-xs) var(--space-sm);
+      border-bottom: 1px solid var(--outline-variant);
+      font-variant-numeric: tabular-nums;
+    }
+
+    table.tabla-guia tr.fila-destacada {
+      background-color: var(--primary-container);
+      font-weight: 700;
+    }
+
+    .badge-estado {
+      display: inline-block;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      background-color: var(--positive-bg);
+      color: var(--positive);
+    }
+
+    /* Accordion FAQ on Page 5 */
+    .faq-lista {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      margin: var(--space-md) 0 var(--space-lg);
+    }
+
+    .faq-item {
+      border: 1.5px solid var(--outline-variant);
+      border-radius: var(--radius-card);
+      background-color: var(--background);
+      overflow: hidden;
+    }
+
+    .faq-item.abierto {
+      border-color: var(--primary);
+    }
+
+    .faq-trigger {
+      width: 100%;
+      min-height: 52px;
+      padding: var(--space-sm) var(--space-md);
+      background-color: var(--surface-container-low);
+      border: 0;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+      cursor: pointer;
+      color: var(--on-surface);
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .faq-item.abierto .faq-trigger {
+      background-color: var(--primary-container);
+      color: var(--primary-dark);
+    }
+
+    .faq-icono {
+      font-family: var(--font-mono);
+      font-size: 1.25rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .faq-cuerpo {
+      display: none;
+      padding: var(--space-md);
+      border-top: 1px solid var(--outline-variant);
+      background-color: var(--background);
+    }
+
+    .faq-item.abierto .faq-cuerpo {
+      display: block;
+    }
+
+    /* Verification Checklist on Page 5 */
+    .checklist-box {
+      border: 1.5px solid var(--outline-variant);
+      border-radius: var(--radius-card);
+      background-color: var(--background);
+      padding: var(--space-md);
+      margin: var(--space-md) 0;
+    }
+
+    .check-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-xs) 0;
+      border-bottom: 1px solid var(--outline-variant);
+    }
+
+    .check-row:last-child {
+      border-bottom: 0;
+    }
+
+    .check-toggle {
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      accent-color: var(--primary);
+      flex-shrink: 0;
+    }
+
+    /* Bottom Page Navigation Footer */
+    .pie-navegacion {
+      margin-top: var(--space-xl);
+      padding-top: var(--space-md);
+      border-top: 2px solid var(--outline-variant);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+    }
+
+    .btn-nav {
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-lg);
+      border-radius: var(--radius-btn);
+      border: 0;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      transition: background-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+
+    .btn-siguiente {
+      background-color: var(--btn-bright);
+      color: var(--on-primary);
+      box-shadow: 0 3px 0 var(--btn-bright-ledge);
+      margin-left: auto;
+    }
+
+    .btn-siguiente:hover {
+      background-color: var(--btn-bright-hover);
+    }
+
+    .btn-siguiente:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 var(--btn-bright-ledge);
+    }
+
+    .btn-anterior {
+      background-color: var(--btn-secondary-bg);
+      color: var(--on-surface);
+      box-shadow: 0 3px 0 var(--btn-secondary-ledge);
+    }
+
+    .btn-anterior:hover {
+      background-color: var(--btn-secondary-hover);
+    }
+
+    .btn-anterior:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 var(--btn-secondary-ledge);
+    }
+
+    .estado-progreso {
+      font-family: var(--font-label);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--on-surface-variant);
+    }
+
+    @media (max-width: 640px) {
+      :root {
+        --spiral-col-w: 2.35rem;
+        --margin-col-x: 2.95rem;
+      }
+
+      body {
+        padding: var(--space-sm) var(--space-xs) var(--space-xl);
+      }
+
+      .hoja {
+        padding: var(--space-lg) var(--space-md) var(--space-lg) calc(var(--margin-col-x) + var(--space-sm));
+        min-height: auto;
+      }
+
+      .espiral-anillo {
+        width: 32px;
+      }
+
+      .espiral-alambre {
+        width: 26px;
+        height: 8px;
+      }
+
+      .espiral-hueco {
+        width: 11px;
+        height: 11px;
+      }
+
+      .tabs-nav {
+        justify-content: flex-start;
+      }
+
+      .tab-btn {
+        font-size: 0.8rem;
+        padding: var(--space-xs) var(--space-sm);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="manual-shell">
+    <!-- Rounded Tab Buttons at the Top -->
+    <nav class="tabs-nav" aria-label="Navegación de hojas del manual">
+      <button type="button" class="tab-btn activa" id="tab-1" onclick="irAPagina(1)" aria-current="page">
+        <span class="tab-num">1</span> Portada
+      </button>
+      <button type="button" class="tab-btn" id="tab-2" onclick="irAPagina(2)">
+        <span class="tab-num">2</span> Datos y Cinética
+      </button>
+      <button type="button" class="tab-btn" id="tab-3" onclick="irAPagina(3)">
+        <span class="tab-num">3</span> Modelo Cinético
+      </button>
+      <button type="button" class="tab-btn" id="tab-4" onclick="irAPagina(4)">
+        <span class="tab-num">4</span> Arrhenius y Estabilidad
+      </button>
+      <button type="button" class="tab-btn" id="tab-5" onclick="irAPagina(5)">
+        <span class="tab-num">5</span> Preguntas Frecuentes
+      </button>
+    </nav>
+
+    <!-- Lab Notebook Container -->
+    <div class="libro">
+      <!-- 3D Silver/Grey Spiral Binder -->
+      <div class="espiral-columna" aria-hidden="true">
+        <div class="espiral-anillo"><span class="espiral-hueco"></span><span class="espiral-alambre"></span></div>
+        <div class="espiral-anillo"><span class="espiral-hueco"></span><span class="espiral-alambre"></span></div>
+        <div class="espiral-anillo"><span class="espiral-hueco"></span><span class="espiral-alambre"></span></div>
+        <div class="espiral-anillo"><span class="espiral-hueco"></span><span class="espiral-alambre"></span></div>
+        <div class="espiral-anillo"><span class="espiral-hueco"></span><span class="espiral-alambre"></span></div>
+        <div class="espiral-anillo"><span class="espiral-hueco"></span><span class="espiral-alambre"></span></div>
+        <div class="espiral-anillo"><span class="espiral-hueco"></span><span class="espiral-alambre"></span></div>
+        <div class="espiral-anillo"><span class="espiral-hueco"></span><span class="espiral-alambre"></span></div>
+        <div class="espiral-anillo"><span class="espiral-hueco"></span><span class="espiral-alambre"></span></div>
+        <div class="espiral-anillo"><span class="espiral-hueco"></span><span class="espiral-alambre"></span></div>
+        <div class="espiral-anillo"><span class="espiral-hueco"></span><span class="espiral-alambre"></span></div>
+        <div class="espiral-anillo"><span class="espiral-hueco"></span><span class="espiral-alambre"></span></div>
+        <div class="espiral-anillo"><span class="espiral-hueco"></span><span class="espiral-alambre"></span></div>
+        <div class="espiral-anillo"><span class="espiral-hueco"></span><span class="espiral-alambre"></span></div>
+      </div>
+
+      <!-- PÁGINA 1: BIENVENIDA Y PORTADA -->
+      <section id="hoja-1" class="hoja activa" aria-labelledby="titulo-hoja-1">
+        <div class="index-header">
+          <span>MI MANUAL · GUÍA INSTRUCTIVA</span>
+          <span class="pagina-badge">Hoja 1 de 5</span>
+        </div>
+
+        <h1 id="titulo-hoja-1" class="titulo-cuaderno">📓 Manual de Usuario — CineticApp</h1>
+        <p class="subhead-lede">
+          Guía paso a paso para operar la plataforma de análisis cinético químico y predicción de estabilidad farmacéutica, desde el registro de datos experimentales hasta la estimación de vida útil.
+        </p>
+
+        <h3 class="subtitulo-seccion">
+          <span class="step-badge">i</span> Propósito de este manual
+        </h3>
+        <p>
+          Este documento instructivo acompaña al usuario durante todo el flujo de trabajo dentro de <strong>CineticApp</strong>. Su objetivo es garantizar que cargues correctamente tus series de tiempo y concentración, interpretes las regresiones del método integral (órdenes 0, 1 y 2) y obtengas proyecciones confiables de vida útil mediante la ecuación de Arrhenius sin cometer errores de formato.
+        </p>
+
+        <h3 class="subtitulo-seccion">
+          <span class="step-badge">✓</span> Primeros pasos antes de comenzar
+        </h3>
+        <div class="guia-grid">
+          <div class="guia-card">
+            <h4 class="guia-card-titulo">1. Reúne tus mediciones</h4>
+            <p>Ten a la mano tu tabla experimental de <strong>Tiempo (t)</strong> y <strong>Concentración ([A])</strong>, así como las constantes <strong>k</strong> a distintas temperaturas si vas a usar Arrhenius.</p>
+          </div>
+          <div class="guia-card">
+            <h4 class="guia-card-titulo">2. Sigue el flujo de pestañas</h4>
+            <p>Opera CineticApp en orden secuencial de izquierda a derecha: primero la pestaña de Cinética, luego Selección del Modelo, Arrhenius y finalmente Predicción.</p>
+          </div>
+          <div class="guia-card">
+            <h4 class="guia-card-titulo">3. Verifica unidades y decimales</h4>
+            <p>Confirma que todos tus datos utilicen <strong>punto decimal (.)</strong> y que las unidades de tiempo y concentración coincidan con los selectores elegidos.</p>
+          </div>
+        </div>
+
+        <div class="callout-azul">
+          <p class="callout-titulo">¿Qué encontrarás en este manual?</p>
+          <ul>
+            <li><strong>Hoja 2 — Paso 1 (Datos y Módulo de Cinética):</strong> Cómo ingresar datos manualmente, con ejemplos o mediante Excel <code>.xlsx</code> (hojas <code>Cinetica</code> y <code>Arrhenius</code>), configurar unidades y usar las sub-pestañas de Orden 0, 1 y 2 junto con las herramientas de gráfico.</li>
+            <li><strong>Hoja 3 — Paso 2 (Selección del Modelo Cinético):</strong> Cómo interpretar la comparación automática de <strong>R²</strong>, elegir el orden más cercano a <code>1.000</code> y leer la constante <strong>k</strong> y los tiempos de vida útil <strong>t90</strong> y <strong>t95</strong>.</li>
+            <li><strong>Hoja 4 — Paso 3 (Arrhenius y Predicción de Estabilidad):</strong> Cómo calcular la energía de activación <strong>Ea</strong> y el factor <strong>A</strong>, consultar la tabla transformada y predecir <strong>k_pred</strong> y <strong>t90</strong> a temperaturas como 25 °C o 4 °C.</li>
+            <li><strong>Hoja 5 — Paso 4 (Preguntas Frecuentes):</strong> Soluciones rápidas para errores de estructura en Excel, comas decimales, valores bajos de <strong>R²</strong> y exportación de gráficos.</li>
+          </ul>
+        </div>
+
+        <div class="pie-navegacion">
+          <span class="estado-progreso">Página 1 de 5 · Portada</span>
+          <button type="button" class="btn-nav btn-siguiente" onclick="irAPagina(2)">Pasar hoja ➔</button>
+        </div>
+      </section>
+
+      <!-- PÁGINA 2: PASO 1 - INGRESO DE DATOS Y MÓDULO DE CINÉTICA -->
+      <section id="hoja-2" class="hoja" aria-labelledby="titulo-hoja-2">
+        <div class="index-header">
+          <span>PASO 1 · CARGA DE DATOS Y PRIMERA PESTAÑA</span>
+          <span class="pagina-badge">Hoja 2 de 5</span>
+        </div>
+
+        <h2 id="titulo-hoja-2" class="titulo-pagina">📓 Paso 1: Ingreso de Datos y Módulo de Cinética</h2>
+        <p class="subhead-lede">
+          Aprende a alimentar CineticApp desde la barra lateral izquierda y a configurar correctamente la Primera Pestaña para analizar los gráficos de orden 0, 1 y 2.
+        </p>
+
+        <h3 class="subtitulo-seccion">
+          <span class="step-badge">1</span> Barra lateral: 3 métodos para ingresar datos
+        </h3>
+        <div class="guia-grid">
+          <div class="guia-card">
+            <h4 class="guia-card-titulo">A. Ingreso manual en tabla</h4>
+            <p>Selecciona la opción de edición manual, escribe cada par <strong>Tiempo</strong> y <strong>Concentración</strong> directamente en las celdas y agrega o elimina filas según tu ensayo.</p>
+          </div>
+          <div class="guia-card">
+            <h4 class="guia-card-titulo">B. Datos de reacción de ejemplo</h4>
+            <p>Haz clic en el botón de ejemplo precargado para poblar la tabla con un caso de degradación farmacéutica válido y comprobar al instante el funcionamiento de las gráficas.</p>
+          </div>
+          <div class="guia-card">
+            <h4 class="guia-card-titulo">C. Carga de archivo Excel (.xlsx)</h4>
+            <p>Sube tu libro de trabajo en formato <code>.xlsx</code> desde el selector de archivos de la barra lateral. El archivo debe respetar los nombres exactos de hojas indicados abajo.</p>
+          </div>
+        </div>
+
+        <!-- Reference Preview for Excel .xlsx Structure -->
+        <div class="excel-panel">
+          <div class="excel-header-row">
+            <div>
+              <strong>Estructura obligatoria del archivo Excel (<code>.xlsx</code>)</strong>
+              <p style="margin: 0; font-size: 0.88rem; color: var(--on-surface-variant);">
+                Alterna entre las dos pestañas de referencia para verificar los nombres de hoja y columnas antes de subir tu archivo.
+              </p>
+            </div>
+            <div class="excel-tabs" role="group" aria-label="Vista previa de hojas Excel">
+              <button type="button" class="excel-switch-btn activo" id="btn-xl-cinetica" onclick="mostrarHojaExcel('cinetica')">Hoja 1: Cinetica</button>
+              <button type="button" class="excel-switch-btn" id="btn-xl-arrhenius" onclick="mostrarHojaExcel('arrhenius')">Hoja 2: Arrhenius</button>
+            </div>
+          </div>
+
+          <div id="xl-preview-cinetica" class="tabla-guia-wrap">
+            <table class="tabla-guia" aria-label="Ejemplo de estructura de la hoja Cinetica">
+              <thead>
+                <tr>
+                  <th>Columna A — Tiempo</th>
+                  <th>Columna B — Concentracion</th>
+                  <th>Nota de formato</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>0</td>
+                  <td>100.0</td>
+                  <td>Nombre exacto de la pestaña: <code>Cinetica</code> (sin tilde)</td>
+                </tr>
+                <tr>
+                  <td>10</td>
+                  <td>88.5</td>
+                  <td>Solo valores numéricos con punto decimal</td>
+                </tr>
+                <tr>
+                  <td>20</td>
+                  <td>78.2</td>
+                  <td>No dejar celdas vacías ni concentraciones ≤ 0</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div id="xl-preview-arrhenius" class="tabla-guia-wrap" style="display: none;">
+            <table class="tabla-guia" aria-label="Ejemplo de estructura de la hoja Arrhenius">
+              <thead>
+                <tr>
+                  <th>Columna A — Temperatura</th>
+                  <th>Columna B — k</th>
+                  <th>Nota de formato</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>40</td>
+                  <td>0.00011</td>
+                  <td>Nombre exacto de la pestaña: <code>Arrhenius</code></td>
+                </tr>
+                <tr>
+                  <td>50</td>
+                  <td>0.00028</td>
+                  <td>Temperatura en °C o K (según configures en Pestaña 3)</td>
+                </tr>
+                <tr>
+                  <td>60</td>
+                  <td>0.00082</td>
+                  <td>Constantes cinéticas positivas en la misma unidad de tiempo</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <h3 class="subtitulo-seccion">
+          <span class="step-badge">2</span> Guía de la Primera Pestaña (Módulo de Cinética)
+        </h3>
+        <ol>
+          <li><strong>Configuración de unidades:</strong> En la parte superior de la primera pestaña, define la unidad de <strong>tiempo</strong> (ej. <code>horas</code>, <code>días</code>, <code>minutos</code>) y de <strong>concentración</strong> (ej. <code>mg/mL</code>, <code>%</code>, <code>mol/L</code>). Esto garantiza que las unidades de la constante <em>k</em> y de la vida útil sean correctas.</li>
+          <li><strong>Verificación en tabla de datos:</strong> Revisa que los pares cargados en la tabla coincidan con tu cuaderno de laboratorio y no contengan errores de digitación.</li>
+          <li><strong>Exploración de las 3 sub-pestañas internas de orden:</strong> Cambia entre <strong>Orden 0</strong> (<code>[A] vs t</code>), <strong>Orden 1</strong> (<code>ln[A] vs t</code>) y <strong>Orden 2</strong> (<code>1/[A] vs t</code>) para observar el comportamiento lineal de cada modelo integral.</li>
+          <li><strong>Uso de herramientas del gráfico:</strong> Sobre la esquina superior derecha del gráfico encontrarás los controles para <strong>descargar como PNG</strong> (ícono de cámara), realizar <strong>zoom</strong> sobre una región específica (arrastrando el cursor o usando <code>+</code>/<code>-</code>) y abrir el gráfico en <strong>pantalla completa</strong>.</li>
+          <li><strong>Lectura de salidas de cada orden:</strong> Debajo de cada gráfica consulta los 4 indicadores calculados automáticamente: <strong>Pendiente (m)</strong>, <strong>Intercepto (b)</strong>, <strong>Coeficiente de determinación (R²)</strong> y la <strong>Ecuación de la recta</strong> ajustada.</li>
+        </ol>
+
+        <div class="callout-azul">
+          <p class="callout-titulo">Consejo clave de operación</p>
+          <p style="margin: 0;">
+            En Orden 0 y Orden 1 la pendiente de la recta de degradación es negativa (<code>k = −m</code>), mientras que en Orden 2 la pendiente es positiva (<code>k = m</code>). CineticApp realiza este ajuste de signo de forma automática.
+          </p>
+        </div>
+
+        <div class="pie-navegacion">
+          <button type="button" class="btn-nav btn-anterior" onclick="irAPagina(1)">⬅ Hoja anterior</button>
+          <span class="estado-progreso">Página 2 de 5 · Datos y Cinética</span>
+          <button type="button" class="btn-nav btn-siguiente" onclick="irAPagina(3)">Pasar hoja ➔</button>
+        </div>
+      </section>
+
+      <!-- PÁGINA 3: PASO 2 - SELECCIÓN DEL MODELO CINÉTICO -->
+      <section id="hoja-3" class="hoja" aria-labelledby="titulo-hoja-3">
+        <div class="index-header">
+          <span>PASO 2 · SEGUNDA PESTAÑA DE LA APLICACIÓN</span>
+          <span class="pagina-badge">Hoja 3 de 5</span>
+        </div>
+
+        <h2 id="titulo-hoja-3" class="titulo-pagina">📓 Paso 2: Selección del Modelo Cinético</h2>
+        <p class="subhead-lede">
+          En la Segunda Pestaña, CineticApp compara automáticamente los tres ajustes del método integral para determinar el orden de reacción más probable y calcular los parámetros críticos de vida útil.
+        </p>
+
+        <div class="callout-azul callout-alerta">
+          <p class="callout-titulo">Prerrequisito obligatorio antes de ingresar a esta pestaña</p>
+          <p style="margin: 0;">
+            Debes haber completado primero el ingreso y la validación de los datos en la <strong>Primera Pestaña (Cinética)</strong>. Si la tabla de datos está vacía o contiene valores inválidos (como concentraciones en cero), la Segunda Pestaña no podrá ejecutar la comparación.
+          </p>
+        </div>
+
+        <h3 class="subtitulo-seccion">
+          <span class="step-badge">1</span> Comparación automatizada de R² (Órdenes 0, 1 y 2)
+        </h3>
+        <p>
+          Al abrir la Segunda Pestaña, la plataforma reúne en un cuadro comparativo los coeficientes de determinación <strong>R²</strong> obtenidos en las tres regresiones lineales. El criterio de selección automática escoge el orden cuyo valor de <strong>R² sea el más cercano a <code>1.000</code></strong>.
+        </p>
+
+        <div class="excel-panel">
+          <p style="margin: 0 0 var(--space-xs); font-weight: 700; color: var(--primary-dark);">
+            Ejemplo de lectura en la tabla comparativa de CineticApp
+          </p>
+          <div class="tabla-guia-wrap">
+            <table class="tabla-guia" aria-label="Ejemplo de comparación de R2 por orden cinético">
+              <thead>
+                <tr>
+                  <th>Modelo evaluado</th>
+                  <th>Ecuación lineal</th>
+                  <th>R² calculado</th>
+                  <th>Resultado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Orden 0</td>
+                  <td><code>[A] = [A]₀ − k·t</code></td>
+                  <td>0.9214</td>
+                  <td>Descartado</td>
+                </tr>
+                <tr class="fila-destacada">
+                  <td>Orden 1</td>
+                  <td><code>ln[A] = ln[A]₀ − k·t</code></td>
+                  <td>0.9989</td>
+                  <td><span class="badge-estado">Más probable (≈ 1.000)</span></td>
+                </tr>
+                <tr>
+                  <td>Orden 2</td>
+                  <td><code>1/[A] = 1/[A]₀ + k·t</code></td>
+                  <td>0.9642</td>
+                  <td>Descartado</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <h3 class="subtitulo-seccion">
+          <span class="step-badge">2</span> Parámetros resultantes: k, t90 y t95
+        </h3>
+        <p>
+          Una vez fijado el orden más probable, la aplicación despliega las tarjetas con los cálculos definitivos de cinética y estabilidad para la temperatura del ensayo:
+        </p>
+
+        <div class="guia-grid">
+          <div class="guia-card">
+            <h4 class="guia-card-titulo">Constante cinética (k)</h4>
+            <p>Representa la rapidez con la que se degrada el principio activo. Sus unidades dependen del orden elegido (ej. <code>h⁻¹</code> para Orden 1).</p>
+          </div>
+          <div class="guia-card">
+            <h4 class="guia-card-titulo">Tiempo t90 (Vida útil)</h4>
+            <p>Es el tiempo necesario para que la concentración caiga al <strong>90 %</strong> de su valor inicial (10 % de degradación), límite estándar de especificación farmacéutica.</p>
+          </div>
+          <div class="guia-card">
+            <h4 class="guia-card-titulo">Tiempo t95 (Alerta temprana)</h4>
+            <p>Indica el momento en que queda el <strong>95 %</strong> del principio activo (5 % de degradación), útil para definir márgenes internos de seguridad y control.</p>
+          </div>
+        </div>
+
+        <div class="callout-azul">
+          <p class="callout-titulo">¿Qué hacer si dos órdenes tienen un R² muy parecido?</p>
+          <p style="margin: 0;">
+            Cuando la degradación total observada es pequeña, Orden 0 y Orden 1 pueden arrojar valores de <strong>R²</strong> muy cercanos (por ejemplo, <code>0.994</code> y <code>0.995</code>). En ese caso, regresa brevemente a las gráficas de la Primera Pestaña e inspecciona visualmente cuál muestra una dispersión de puntos más alineada y sin curvatura sistemática.
+          </p>
+        </div>
+
+        <div class="pie-navegacion">
+          <button type="button" class="btn-nav btn-anterior" onclick="irAPagina(2)">⬅ Hoja anterior</button>
+          <span class="estado-progreso">Página 3 de 5 · Modelo Cinético</span>
+          <button type="button" class="btn-nav btn-siguiente" onclick="irAPagina(4)">Pasar hoja ➔</button>
+        </div>
+      </section>
+
+      <!-- PÁGINA 4: PASO 3 - ARRHENIUS Y PREDICCIÓN DE ESTABILIDAD -->
+      <section id="hoja-4" class="hoja" aria-labelledby="titulo-hoja-4">
+        <div class="index-header">
+          <span>PASO 3 · TERCERA Y CUARTA PESTAÑA</span>
+          <span class="pagina-badge">Hoja 4 de 5</span>
+        </div>
+
+        <h2 id="titulo-hoja-4" class="titulo-pagina">📓 Paso 3: Modelo de Arrhenius y Predicción</h2>
+        <p class="subhead-lede">
+          Utiliza las constantes cinéticas medidas a distintas temperaturas aceleradas para obtener la energía de activación y extrapolar la estabilidad del medicamento a condiciones reales de almacenamiento.
+        </p>
+
+        <h3 class="subtitulo-seccion">
+          <span class="step-badge">3</span> Guía de la Tercera Pestaña (Módulo de Arrhenius)
+        </h3>
+        <ol>
+          <li><strong>Carga o ingreso de pares (T, k):</strong> Verifica los datos importados desde la Hoja 2 (<code>Arrhenius</code>) de tu Excel o digita manualmente al menos tres temperaturas (por ejemplo, 40 °C, 50 °C, 60 °C) junto con sus respectivas constantes <strong>k</strong>.</li>
+          <li><strong>Regresión lineal <code>ln(k)</code> vs. <code>1/T</code>:</strong> CineticApp convierte cada temperatura a escala absoluta Kelvin (<code>T[K] = T[°C] + 273.15</code>), calcula el inverso <code>1/T</code> y el logaritmo natural <code>ln(k)</code>, y ejecuta la regresión lineal.</li>
+          <li><strong>Lectura de parámetros Ea y A:</strong> En los indicadores principales obtendrás la <strong>Energía de Activación (Ea)</strong> (derivada de la pendiente de la recta) y el <strong>Factor Preexponencial (A)</strong> (calculado desde el intercepto).</li>
+          <li><strong>Sección desplegable de transformación y gráfico:</strong> Haz clic en el panel colapsable para revisar la tabla con los valores intermedios (<code>1/T</code> y <code>ln(k)</code>) y visualizar el <strong>gráfico de Arrhenius</strong>, el cual también cuenta con botones de exportación PNG y zoom.</li>
+        </ol>
+
+        <h3 class="subtitulo-seccion">
+          <span class="step-badge">4</span> Guía de la Cuarta Pestaña (Predicción de Estabilidad)
+        </h3>
+        <div class="guia-grid">
+          <div class="guia-card">
+            <h4 class="guia-card-titulo">1. Temperatura de almacenamiento</h4>
+            <p>Selecciona o ingresa la temperatura a la que se conservará el producto terminado, por ejemplo <strong>25 °C</strong> (ambiente controlada) o <strong>4 °C</strong> (refrigeración).</p>
+          </div>
+          <div class="guia-card">
+            <h4 class="guia-card-titulo">2. Constante k_pred y t90 predicho</h4>
+            <p>La herramienta sustituye la temperatura elegida en la ecuación de Arrhenius para calcular <strong>k_pred</strong> y proyectar el nuevo <strong>t90</strong> utilizando el orden del Paso 2.</p>
+          </div>
+          <div class="guia-card">
+            <h4 class="guia-card-titulo">3. Conclusión farmacéutica automática</h4>
+            <p>Lee el dictamen automático en la parte inferior: resume la velocidad de degradación esperada y sugiere si la formulación es estable a temperatura ambiente o requiere cadena de frío.</p>
+          </div>
+        </div>
+
+        <div class="callout-azul callout-exito">
+          <p class="callout-titulo">Interpretación rápida de la predicción</p>
+          <p style="margin: 0;">
+            Al comparar una simulación a <strong>25 °C</strong> frente a una a <strong>4 °C</strong>, notarás que al bajar la temperatura disminuye <strong>k_pred</strong> y aumenta significativamente el <strong>t90 predicho</strong>. Usa el bloque de conclusión automática como base técnica para redactar las recomendaciones de conservación en el rotulado.
+          </p>
+        </div>
+
+        <div class="pie-navegacion">
+          <button type="button" class="btn-nav btn-anterior" onclick="irAPagina(3)">⬅ Hoja anterior</button>
+          <span class="estado-progreso">Página 4 de 5 · Arrhenius y Estabilidad</span>
+          <button type="button" class="btn-nav btn-siguiente" onclick="irAPagina(5)">Pasar hoja ➔</button>
+        </div>
+      </section>
+
+      <!-- PÁGINA 5: PASO 4 - PREGUNTAS FRECUENTES Y SOLUCIÓN DE PROBLEMAS -->
+      <section id="hoja-5" class="hoja" aria-labelledby="titulo-hoja-5">
+        <div class="index-header">
+          <span>PASO 4 · SOPORTE Y DIAGNÓSTICO</span>
+          <span class="pagina-badge">Hoja 5 de 5</span>
+        </div>
+
+        <h2 id="titulo-hoja-5" class="titulo-pagina">📓 Paso 4: Preguntas Frecuentes y Solución de Problemas</h2>
+        <p class="subhead-lede">
+          Consulta cada pregunta desplegable para resolver rápidamente los inconvenientes más comunes al preparar archivos, ingresar decimales o interpretar resultados en CineticApp.
+        </p>
+
+        <div class="faq-lista">
+          <div class="faq-item abierto" id="faq-1">
+            <button type="button" class="faq-trigger" onclick="toggleFaq('faq-1')" aria-expanded="true" aria-controls="faq-cuerpo-1">
+              <span>1. El archivo Excel (.xlsx) da error o no reconoce las columnas</span>
+              <span class="faq-icono" id="faq-icono-1">−</span>
+            </button>
+            <div class="faq-cuerpo" id="faq-cuerpo-1">
+              <p><strong>Causa frecuente:</strong> Las pestañas del libro tienen tildes, espacios extra o nombres distintos (por ejemplo, <code>Hoja1</code> o <code>Cinética</code>), o hay títulos decorativos en las primeras filas.</p>
+              <p style="margin: 0;"><strong>Cómo solucionarlo:</strong> Nombra exactamente la primera hoja como <code>Cinetica</code> y la segunda como <code>Arrhenius</code>. Coloca los encabezados en la fila 1 sin celdas combinadas y verifica que solo existan dos columnas numéricas por hoja.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" id="faq-2">
+            <button type="button" class="faq-trigger" onclick="toggleFaq('faq-2')" aria-expanded="false" aria-controls="faq-cuerpo-2">
+              <span>2. Mis números tienen comas (,) en lugar de puntos (.) y los cálculos fallan</span>
+              <span class="faq-icono" id="faq-icono-2">+</span>
+            </button>
+            <div class="faq-cuerpo" id="faq-cuerpo-2">
+              <p><strong>Causa frecuente:</strong> Algunos equipos en español usan la coma como separador decimal, lo que puede provocar que una celda se lea como texto (por ejemplo, <code>0,0025</code>).</p>
+              <p style="margin: 0;"><strong>Cómo solucionarlo:</strong> Al escribir en la tabla manual de CineticApp usa siempre <strong>punto decimal (.)</strong> (ejemplo: <code>0.0025</code>). Si vienes de Excel, asegúrate de que las celdas tengan formato <em>Número</em> y no <em>Texto</em>.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" id="faq-3">
+            <button type="button" class="faq-trigger" onclick="toggleFaq('faq-3')" aria-expanded="false" aria-controls="faq-cuerpo-3">
+              <span>3. Obtengo valores de R² muy bajos (menores a 0.900) en los tres órdenes</span>
+              <span class="faq-icono" id="faq-icono-3">+</span>
+            </button>
+            <div class="faq-cuerpo" id="faq-cuerpo-3">
+              <p><strong>Causa frecuente:</strong> Existe un punto atípico (<em>outlier</em>) por error analítico, las unidades de tiempo o concentración no son homogéneas, o el porcentaje total degradado es mínimo (menor al 5 %).</p>
+              <p style="margin: 0;"><strong>Cómo solucionarlo:</strong> Revisa la gráfica de dispersión en la Primera Pestaña para detectar puntos fuera de tendencia, confirma que no haya concentraciones en <code>0</code> o negativas y verifica que todos los muestreos pertenezcan a la misma temperatura.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" id="faq-4">
+            <button type="button" class="faq-trigger" onclick="toggleFaq('faq-4')" aria-expanded="false" aria-controls="faq-cuerpo-4">
+              <span>4. ¿Cómo exporto los gráficos nítidos para mi informe de laboratorio?</span>
+              <span class="faq-icono" id="faq-icono-4">+</span>
+            </button>
+            <div class="faq-cuerpo" id="faq-cuerpo-4">
+              <p><strong>Causa frecuente:</strong> Hacer capturas de pantalla directas recorta los ejes o genera imágenes pixeladas al pegarlas en documentos.</p>
+              <p style="margin: 0;"><strong>Cómo solucionarlo:</strong> Posiciona el cursor en la esquina superior derecha de cualquier gráfica (Cinética o Arrhenius) y presiona el ícono de <strong>cámara (Descargar como PNG)</strong>. Si necesitas mayor detalle, activa primero <strong>pantalla completa</strong> y luego descarga la imagen.</p>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="subtitulo-seccion">
+          <span class="step-badge">✓</span> Lista rápida de verificación final
+        </h3>
+        <div class="checklist-box">
+          <label class="check-row">
+            <input type="checkbox" class="check-toggle">
+            <span>Verifiqué las unidades de tiempo y concentración en la Primera Pestaña.</span>
+          </label>
+          <label class="check-row">
+            <input type="checkbox" class="check-toggle">
+            <span>Confirmé el orden de reacción con R² más cercano a 1.000 en la Segunda Pestaña.</span>
+          </label>
+          <label class="check-row">
+            <input type="checkbox" class="check-toggle">
+            <span>Revisé Ea, A y el gráfico de Arrhenius antes de predecir a 25 °C o 4 °C.</span>
+          </label>
+          <label class="check-row">
+            <input type="checkbox" class="check-toggle">
+            <span>Descargué mis gráficas en PNG y registré k_pred, t90 y la conclusión de estabilidad.</span>
+          </label>
+        </div>
+
+        <div class="pie-navegacion">
+          <button type="button" class="btn-nav btn-anterior" onclick="irAPagina(4)">⬅ Hoja anterior</button>
+          <span class="estado-progreso">Página 5 de 5 · Fin del manual</span>
+          <button type="button" class="btn-nav btn-siguiente" onclick="irAPagina(1)">Volver a la portada ↺</button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const TOTAL_PAGINAS = 5;
+    let paginaActual = 1;
+
+    function irAPagina(num) {
+      if (num < 1 || num > TOTAL_PAGINAS) return;
+      paginaActual = num;
+
+      for (let i = 1; i <= TOTAL_PAGINAS; i++) {
+        const hoja = document.getElementById(`hoja-${i}`);
+        const tab = document.getElementById(`tab-${i}`);
+        if (hoja) {
+          if (i === num) {
+            hoja.classList.add(`activa`);
+          } else {
+            hoja.classList.remove(`activa`);
+          }
+        }
+        if (tab) {
+          if (i === num) {
+            tab.classList.add(`activa`);
+            tab.setAttribute(`aria-current`, `page`);
+          } else {
+            tab.classList.remove(`activa`);
+            tab.removeAttribute(`aria-current`);
+          }
+        }
+      }
+
+      const libro = document.querySelector(`.libro`);
+      if (libro) {
+        libro.scrollIntoView({ behavior: `smooth`, block: `start` });
+      }
+    }
+
+    function mostrarHojaExcel(tipo) {
+      const panelCin = document.getElementById(`xl-preview-cinetica`);
+      const panelArr = document.getElementById(`xl-preview-arrhenius`);
+      const btnCin = document.getElementById(`btn-xl-cinetica`);
+      const btnArr = document.getElementById(`btn-xl-arrhenius`);
+
+      if (!panelCin || !panelArr || !btnCin || !btnArr) return;
+
+      if (tipo === `cinetica`) {
+        panelCin.style.display = `block`;
+        panelArr.style.display = `none`;
+        btnCin.classList.add(`activo`);
+        btnArr.classList.remove(`activo`);
+      } else {
+        panelCin.style.display = `none`;
+        panelArr.style.display = `block`;
+        btnCin.classList.remove(`activo`);
+        btnArr.classList.add(`activo`);
+      }
+    }
+
+    function toggleFaq(id) {
+      const item = document.getElementById(id);
+      if (!item) return;
+      const btn = item.querySelector(`.faq-trigger`);
+      const icono = item.querySelector(`.faq-icono`);
+      const estaAbierto = item.classList.contains(`abierto`);
+
+      if (estaAbierto) {
+        item.classList.remove(`abierto`);
+        if (btn) btn.setAttribute(`aria-expanded`, `false`);
+        if (icono) icono.textContent = `+`;
+      } else {
+        item.classList.add(`abierto`);
+        if (btn) btn.setAttribute(`aria-expanded`, `true`);
+        if (icono) icono.textContent = `−`;
+      }
+    }
+
+    document.addEventListener(`keydown`, function (e) {
+      if (e.target && (e.target.tagName === `INPUT` || e.target.tagName === `TEXTAREA`)) return;
+      if (e.key === `ArrowRight` && paginaActual < TOTAL_PAGINAS) {
+        irAPagina(paginaActual + 1);
+      } else if (e.key === `ArrowLeft` && paginaActual > 1) {
+        irAPagina(paginaActual - 1);
+      }
+    });
+  </script>
+</body>
+</html>
